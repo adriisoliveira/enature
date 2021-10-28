@@ -4,6 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:payflow/modules/home/home_controller.dart';
+import 'package:payflow/modules/maps/maps_place.dart';
 import 'package:payflow/modules/search/Data.dart';
 import 'package:payflow/modules/search/pontos_repositories.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
@@ -39,6 +42,15 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final controller = HomeController();
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+    
     final tabela = PontosRepositories.tabela;
 
     final String aba;
@@ -63,29 +75,27 @@ class SearchPage extends StatelessWidget {
         //
       });
     });
-    // dataList.length == 0 ? Center(child: Text("Not aval")): ListView.builder(
-    //     itemBuilder: (_,index){
-    //       return CardUI(dataList[index].imgUrl,dataList[index].name,dataList[index].material,dataList[index].price,);
-    //     }
-    //      );
+
     return Scaffold(
       appBar: AppBar(
           title: Text('Ache um ponto próximo:'),
-          backgroundColor: AppColors.primary),
+          backgroundColor: AppColors.primary
+        ),
       body: Container(
         child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
-                  // controller: editingController,
                   decoration: InputDecoration(
                       labelText: "Procurar locais",
-                      // hintTex:"Informe o nome do jogador",
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(25.0))))),
+                              BorderRadius.all(Radius.circular(25.0))
+                  )
+                )
+              ),
             ),
             dataList.length == 0
                 ? Center(child: Text("Not aval"))
@@ -96,34 +106,52 @@ class SearchPage extends StatelessWidget {
                       dataList[index].material,
                       dataList[index].price,
                     );
-                  })
-            // ListView.separated(
-            //     itemBuilder: (BuildContext context, int pontos) {
-            //       return ListTile(
-            //         leading: Image.asset(tabela[pontos].icon),
-            //         title: Text(tabela[pontos].nome),
-            //         trailing: Text(tabela[pontos].descricao),
-            //       );
-            //     },
-            //     padding: EdgeInsets.all(16),
-            //     separatorBuilder: (_, ___) => Divider(),
-            //     itemCount: tabela.length),
-            // ListView(
-            //   children: <Widget>[
-            //     ListTile(
-            //       leading: Icon(Icons.map),
-            //       title: Text('Mapa'),
-            //     ),
-            //     ListTile(
-            //       leading: Icon(Icons.photo_album),
-            //       title: Text('Álbum'),
-            //     ),
-            //     ListTile(
-            //       leading: Icon(Icons.phone),
-            //       title: Text('Fone'),
-            //     ),
-            //   ],
-            // )
+            })
+          ],
+        ),
+        
+      ),
+      bottomNavigationBar: Container(
+        height: 90,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+                onPressed: () {
+                  controller.setPage(0);
+                  setState(() {});
+                },
+                icon: Icon(Icons.home,
+                color: controller.currentPage == 0
+                ? AppColors.primary: AppColors.body)),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              },
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Icon(
+                  Icons.search_sharp,
+                  color: AppColors.background,
+                ),
+              ),
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MapsPlace()));
+                  // controller.setPage(1);
+                  //  setState(() {});
+                },
+                icon: Icon(Icons.map_sharp,
+                color: controller.currentPage == 1
+                ? AppColors.primary
+                : AppColors.body))
           ],
         ),
       ),
@@ -164,7 +192,8 @@ class SearchPage extends StatelessWidget {
           SizedBox(
             height: 1,
           ),
-        ]),
+        ]
+        ),
       ),
     );
   }

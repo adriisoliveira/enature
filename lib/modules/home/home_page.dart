@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/maps/maps.dart';
+import 'package:payflow/modules/maps/maps_place.dart';
+import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/modules/maps/maps_page.dart';
 import 'package:payflow/modules/search/Data.dart';
 import 'package:payflow/modules/search/search_page.dart';
@@ -13,7 +15,8 @@ import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,40 +26,14 @@ class HomePage extends StatefulWidget {
 List<Data> dataList = [];
 
 class _HomePageState extends State<HomePage> {
+   final ScrollController _controllerOne = ScrollController();
   final controller = HomeController();
   final pages = [Container(color: Colors.red), Container(color: Colors.blue)];
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   DatabaseReference referenceData =
-  //       FirebaseDatabase.instance.reference().child("Data");
-  //   referenceData.once().then((DataSnapshot dataSnapShot) {
-  //     dataList.clear();
-  //     var keys = dataSnapShot.value.keys;
-  //     var values = dataSnapShot.value;
-
-  //     for (var key in keys) {
-  //       Data data = new Data(
-  //         values[key]["imgUrl"],
-  //         values[key]["name"],
-  //         values[key]["material"],
-  //         values[key]["price"],
-  //       );
-  //       dataList.add(data);
-  //     }
-  //     setState(() {
-  //       //
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(152),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(152),
         child: Container(
           height: 152,
           color: AppColors.primary,
@@ -68,7 +45,8 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyles.titleRegular,
                     children: [
                       TextSpan(
-                          text: "Dri", style: TextStyles.titleBoldBackground)
+                          text: "${widget.user.name}",
+                          style: TextStyles.titleBoldBackground)
                     ]),
               ),
               subtitle: Text(
@@ -80,47 +58,36 @@ class _HomePageState extends State<HomePage> {
                 width: 48,
                 decoration: BoxDecoration(
                     color: Colors.black,
-                    borderRadius: BorderRadius.circular(5)),
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(image: NetworkImage(widget.user.photoURL!))),
               ),
             ),
-            // children: [StreamBuilder(
-            //   stream: FirebaseFirestore.instance
-            //       .collection('usuariosTest')
-            //       .snapshots(),
-            //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-            //     if (snapshot.hasError) {
-            //       return Text('Error: ${snapshot.error}');
-            //     }
-
-            //     switch (snapshot.connectionState) {
-            //       case ConnectionState.waiting:
-            //         return LinearProgressIndicator();
-            //         break;
-            //       default:
-            //         return Center(
-            //           child: ListView(
-            //             children: snapshot.data.documents.map((DocumentSnapshot doc){
-            //               return ListTile(
-            //                   leading: Icon(Icons.people, size: 52),
-            //                   title: Text(doc.data['nome']),
-            //                   subtitle: Text(doc.data['telefone']),
-            //               );
-            //             }).toList(),
-            //           ),
-            //         );
-            //     }
-            //   },
-            // ),],
+          ),
+        ),),
+      // AppBar(
+      //   title: Text('Home'),
+      //   backgroundColor: AppColors.primary),
+      body: SingleChildScrollView(
+        child:Container(
+          child: Card(
+                color: AppColors.shape, 
+                child: Container(
+                  padding: EdgeInsets.all(32.0),
+                  child: Column(
+                    children: <Widget>[
+                      Image.network(
+                        "https://media.discordapp.net/attachments/816786521024626759/903300649976995920/nature.png?width=180&height=180"),
+                      Divider(),
+                      Text('Fique à vontade para encontrar o ponto de reciclagem mais próximo da sua localização contribuindo para o tratamento de resíduos de maneira adequada, mitigando impactos ambientais.\n\nQuem somos\n\nO E-nature é uma cooperação brasileira que facilita o acesso à informação para usuários que desejam contribuir para a construção de uma sociedade sustentável proporcionando a conversão do desperdício de materiais tecnológicos em produtos de potencial utilidade gerando o tratamento adequado dos periféricos.\n\nNossa missão\n\nGarantir o respeito às pessoas e ao meio ambiente através da gestão ambiental apropriada, entregue-se benefícios ao meio ambiente como a reciclagem visando sempre um amanhã sustentável.\n\nVisão\n\n Contribuir com credibilidade e transparência para ser referência de software que colabora para que o processo seja fácil para o usuário e como resultado, buscamos oferecer um produto limpo com qualidade e equilíbrio ambiental. Acreditamos que junto podemos reduzir o impacto do desperdício diário.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),
-      body: pages[controller.currentPage],
-      // dataList.length == 0 ? Center(child: Text("Not aval", style: TextStyles(fontSize: 30),)): ListView.builder(
-      //   itemBuilder: itemBuilder(_,index){
-      //     return CardUI(dataList[index].imgUrl,dataList[index].name,dataList[index].material,dataList[index].price,);
-      //   }
-      //    ),
       bottomNavigationBar: Container(
         height: 90,
         child: Row(
@@ -131,7 +98,9 @@ class _HomePageState extends State<HomePage> {
                   controller.setPage(0);
                   setState(() {});
                 },
-                icon: Icon(Icons.home, color: AppColors.primary)),
+                icon: Icon(Icons.home,
+                color: controller.currentPage == 0
+                ? AppColors.primary: AppColors.body)),
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
@@ -152,53 +121,17 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MapsPage()));
+                      MaterialPageRoute(builder: (context) => MapsPlace()));
                   // controller.setPage(1);
                   //  setState(() {});
                 },
-                icon: Icon(Icons.map_sharp, color: AppColors.body))
+                icon: Icon(Icons.map,
+                color: controller.currentPage == 1
+                ? AppColors.primary
+                : AppColors.body))
           ],
         ),
       ),
-    );
+    );  
   }
-
-  // Widget CardUI(String imgUrl, String name, String material, String prince) {
-  //   return Card(
-  //     margin: EdgeInsets.all(15),
-  //     color: Color(0xffff2fc3),
-  //     child: Container(
-  //       color: Colors.white,
-  //       margin: EdgeInsets.all(1.5),
-  //       padding: EdgeInsets.all(10),
-  //       child: Column(children: <Widget>[
-  //         Image.network(
-  //           imgUrl,
-  //           fit: BoxFit.cover,
-  //           height: 100,
-  //         ),
-  //         SizedBox(
-  //           height: 1,
-  //         ),
-  //         Text(
-  //           name,
-  //           style: TextStyles(Color: Colors.black, FontWeight: FontWeight.bold),
-  //         ),
-  //         SizedBox(
-  //           height: 1,
-  //         ),
-  //         Container(
-  //           width: double.infinity,
-  //           child: Text(
-  //             prince,
-  //             style: TextStyles(Color: Colors.red),
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 1,
-  //         ),
-  //       ]),
-  //     ),
-  //   );
-  // }
 }
