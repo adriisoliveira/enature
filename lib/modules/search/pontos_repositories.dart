@@ -21,4 +21,5 @@ class PontosRepositories {
         descricao: 'Recebe carregadores'
       ),
   ];
+  
 }

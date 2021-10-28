@@ -1,8 +1,13 @@
+import 'dart:ffi';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/maps/maps.dart';
 import 'package:payflow/modules/maps/maps_page.dart';
+import 'package:payflow/modules/search/Data.dart';
 import 'package:payflow/modules/search/search_page.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
@@ -14,9 +19,39 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+//a
+List<Data> dataList = [];
+
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
   final pages = [Container(color: Colors.red), Container(color: Colors.blue)];
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   DatabaseReference referenceData =
+  //       FirebaseDatabase.instance.reference().child("Data");
+  //   referenceData.once().then((DataSnapshot dataSnapShot) {
+  //     dataList.clear();
+  //     var keys = dataSnapShot.value.keys;
+  //     var values = dataSnapShot.value;
+
+  //     for (var key in keys) {
+  //       Data data = new Data(
+  //         values[key]["imgUrl"],
+  //         values[key]["name"],
+  //         values[key]["material"],
+  //         values[key]["price"],
+  //       );
+  //       dataList.add(data);
+  //     }
+  //     setState(() {
+  //       //
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(5)),
               ),
             ),
-            // child: StreamBuilder(
+            // children: [StreamBuilder(
             //   stream: FirebaseFirestore.instance
             //       .collection('usuariosTest')
             //       .snapshots(),
@@ -76,11 +111,16 @@ class _HomePageState extends State<HomePage> {
             //         );
             //     }
             //   },
-            // ),
+            // ),],
           ),
         ),
       ),
       body: pages[controller.currentPage],
+      // dataList.length == 0 ? Center(child: Text("Not aval", style: TextStyles(fontSize: 30),)): ListView.builder(
+      //   itemBuilder: itemBuilder(_,index){
+      //     return CardUI(dataList[index].imgUrl,dataList[index].name,dataList[index].material,dataList[index].price,);
+      //   }
+      //    ),
       bottomNavigationBar: Container(
         height: 90,
         child: Row(
@@ -122,4 +162,43 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  // Widget CardUI(String imgUrl, String name, String material, String prince) {
+  //   return Card(
+  //     margin: EdgeInsets.all(15),
+  //     color: Color(0xffff2fc3),
+  //     child: Container(
+  //       color: Colors.white,
+  //       margin: EdgeInsets.all(1.5),
+  //       padding: EdgeInsets.all(10),
+  //       child: Column(children: <Widget>[
+  //         Image.network(
+  //           imgUrl,
+  //           fit: BoxFit.cover,
+  //           height: 100,
+  //         ),
+  //         SizedBox(
+  //           height: 1,
+  //         ),
+  //         Text(
+  //           name,
+  //           style: TextStyles(Color: Colors.black, FontWeight: FontWeight.bold),
+  //         ),
+  //         SizedBox(
+  //           height: 1,
+  //         ),
+  //         Container(
+  //           width: double.infinity,
+  //           child: Text(
+  //             prince,
+  //             style: TextStyles(Color: Colors.red),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 1,
+  //         ),
+  //       ]),
+  //     ),
+  //   );
+  // }
 }
