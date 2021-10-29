@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/maps/maps.dart';
+import 'package:payflow/modules/maps/maps_api.dart';
 import 'package:payflow/modules/maps/maps_place.dart';
 import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/modules/maps/maps_page.dart';
@@ -16,7 +17,7 @@ import 'package:payflow/shared/themes/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
   final UserModel user;
-  const HomePage({Key? key, required this.user}) : super(key: key);
+  const HomePage({Key? key, required this.user,}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -26,7 +27,7 @@ class HomePage extends StatefulWidget {
 List<Data> dataList = [];
 
 class _HomePageState extends State<HomePage> {
-   final ScrollController _controllerOne = ScrollController();
+  final ScrollController _controllerOne = ScrollController();
   final controller = HomeController();
   final pages = [Container(color: Colors.red), Container(color: Colors.blue)];
 
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MapsPlace()));
+                      MaterialPageRoute(builder: (context) => MapsApi()));
                   // controller.setPage(1);
                   //  setState(() {});
                 },
