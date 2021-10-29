@@ -13,6 +13,7 @@ import 'package:payflow/modules/maps/maps_page.dart';
 import 'package:payflow/modules/search/Data.dart';
 import 'package:payflow/modules/search/search_page.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
+import 'package:payflow/shared/themes/app_images.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(152),
         child: Container(
-          height: 152,
+          height: 132,
           color: AppColors.primary,
           child: Center(
             child: ListTile(
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
               ),
               subtitle: Text(
-                "Bem vindo (a) ao app",
+                "Bem vindo (a) ao E-Nature",
                 style: TextStyles.captionShape,
               ),
               trailing: Container(
@@ -65,9 +66,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),),
-      // AppBar(
-      //   title: Text('Home'),
-      //   backgroundColor: AppColors.primary),
       body: SingleChildScrollView(
         child:Container(
           child: Card(
@@ -76,13 +74,69 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(32.0),
                   child: Column(
                     children: <Widget>[
-                      Image.network(
-                        "https://media.discordapp.net/attachments/816786521024626759/903300649976995920/nature.png?width=180&height=180"),
+                      Image.asset(AppImages.natureTitle),
                       Divider(),
-                      Text('Fique à vontade para encontrar o ponto de reciclagem mais próximo da sua localização contribuindo para o tratamento de resíduos de maneira adequada, mitigando impactos ambientais.\n\nQuem somos\n\nO E-nature é uma cooperação brasileira que facilita o acesso à informação para usuários que desejam contribuir para a construção de uma sociedade sustentável proporcionando a conversão do desperdício de materiais tecnológicos em produtos de potencial utilidade gerando o tratamento adequado dos periféricos.\n\nNossa missão\n\nGarantir o respeito às pessoas e ao meio ambiente através da gestão ambiental apropriada, entregue-se benefícios ao meio ambiente como a reciclagem visando sempre um amanhã sustentável.\n\nVisão\n\n Contribuir com credibilidade e transparência para ser referência de software que colabora para que o processo seja fácil para o usuário e como resultado, buscamos oferecer um produto limpo com qualidade e equilíbrio ambiental. Acreditamos que junto podemos reduzir o impacto do desperdício diário.',
+                      Text('\nFique à vontade para encontrar o ponto de reciclagem mais próximo da sua localização contribuindo para o tratamento de resíduos de maneira adequada, mitigando impactos ambientais, basta cliclar na lupa e depois procurar seu local no mapa.\n',
                       textAlign: TextAlign.justify,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                  )
+                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0),
+                  ),
+                  Divider(),
+                  Text('\nVoce sabe o que é lixo eletrônico?\n',
+                  textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                  ),
+                  Image.asset(AppImages.elixoLogo),
+                  Text(
+                    '\n\nO conceito de lixo eletrônico engloba diversas questões que vão desde o lixo informacional até o descarte de aparelhos eletrônicos.\nPode-se dizer que é todo o resíduo material de otigem inorgânica.Por exemplo: \n\n -Monitores de computador \n -Telefones celulares \n -Geladeiras \n -Carregadores \n -Pilhas \n\nEntre outros, classificados entre os tipos de linha, tal como verde (notebooks e tablets) e azul (batedeiras  e furadeiras).\n',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0)
+                  ),
+                  Divider(),
+                  Text(
+                    '\nProblemas do descarte incorreto!\n',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                  ),
+                  Image.asset(AppImages.elixo),
+                  Text(
+                    '\nDe maneira geral, os principais danos causados pelo lixo eletrônico ao meio ambiente e a população são dividios entre: \n -Redução do tempo de vida últil dos aterros \n -Contaminação por metais pesados \n -Danos a saúde pública\n',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0)
+                  ),
+                  Divider(),
+                  Text(
+                    '\nA E-Nature\n',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, color: AppColors.primary)
+                  ),
+                  Image.asset(AppImages.nature, width: 180,height: 180,),
+                  Text('\n\nQuem somos',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0, color: AppColors.primary)),
+                  Text('\n\nO E-nature é uma cooperação brasileira que facilita o acesso à informação para usuários que desejam contribuir para a construção de uma sociedade sustentável proporcionando a conversão do desperdício de materiais tecnológicos em produtos de potencial utilidade gerando o tratamento adequado dos periféricos.',
+                  textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0)
+                  ),
+                  Text(
+                    '\n\nNossa missão',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0, color: AppColors.primary)
+                  ),
+                  Text(
+                    '\n\nGarantir o respeito às pessoas e ao meio ambiente através da gestão ambiental apropriada, entregue-se benefícios ao meio ambiente como a reciclagem visando sempre um amanhã sustentável.',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0)
+                  ),
+                  Text(
+                    '\n\nVisão',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20.0, color: AppColors.primary)
+                  ),
+                  Text(
+                    '\n\n Contribuir com credibilidade e transparência para ser referência de software que colabora para que o processo seja fácil para o usuário e como resultado, buscamos oferecer um produto limpo com qualidade e equilíbrio ambiental. Acreditamos que junto podemos reduzir o impacto do desperdício diário.',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15.0)
+                  ),
                 ],
               ),
             ),

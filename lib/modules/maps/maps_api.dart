@@ -4,6 +4,7 @@ import 'package:payflow/blocs/application_bloc.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/search/search_page.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
+import 'package:payflow/shared/themes/app_images.dart';
 import 'package:provider/provider.dart';
 
 class MapsApi extends StatefulWidget {
@@ -14,6 +15,7 @@ class MapsApi extends StatefulWidget {
 }
 
 class _MapsApiState extends State<MapsApi> {
+  var a = 3;
   final controller = HomeController();
   late GoogleMapController mapController;
   void _onMapCreated(GoogleMapController controller) {
@@ -44,9 +46,22 @@ class _MapsApiState extends State<MapsApi> {
               mapType: MapType.normal,
               myLocationEnabled: true,
               initialCameraPosition: CameraPosition(
-                target: LatLng(-12.9372120717467, -38.40660717386153),
-                zoom: 14
+                target: 
+                //LatLng(-12.9372120717467, -38.40660717386153),
+                LatLng(applicationBloc.currentLocation.latitude,applicationBloc.currentLocation.longitude),
+                zoom: 14,
               ),
+              // markers: (a == 0)
+              // ? <Marker>[].toSet()
+              // : [
+              //     Marker(
+              //     markerId: MarkerId('m1'),
+              //     position:
+              //         LatLng(
+              //           -12.9372120717467, -38.40660717386153
+              //         ),
+              //   ),
+              // ].toSet(),
             ),
           )
         ],
