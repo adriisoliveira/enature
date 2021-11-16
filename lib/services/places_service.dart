@@ -4,7 +4,7 @@ import 'dart:convert' as convert;
 import 'package:payflow/models/place_search.dart';
 
 class PlacesService {
-  final key = 'AIzaSyBQUjO5GsD71dTwgAvRHvvWSeSz5MP4TRU';
+  final key = '';
 
   Future<List<PlaceSearch>> getAutocomplete(String search) async {
     final String apiEndpoint =
